@@ -8,12 +8,13 @@
 # Lisa <pfirsichbaeumchen@tatoeba.org>, 2016-2020
 # Ricardo Vernaut Jr <rvj1444@gmail.com>, 2020
 # Wolfgang Th, 2020
+# Wolfgang Th, 2020
 msgid ""
 msgstr ""
 "Project-Id-Version: Tatoeba Website\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-08 11:57+0800\n"
-"PO-Revision-Date: 2020-05-08 05:20+0000\n"
+"POT-Creation-Date: 2020-07-23 16:42+0200\n"
+"PO-Revision-Date: 2020-07-23 17:31+0000\n"
 "Last-Translator: Transifex Bot <>\n"
 "Language-Team: German (http://www.transifex.com/tatoeba/tatoeba_website/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -1072,7 +1073,7 @@ msgstr "Iban"
 
 #: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L495
 msgid "Old Aramaic"
-msgstr "Altaramäisch"
+msgstr "Aramäisch (Alt-)"
 
 #: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L496
 msgid "Moroccan Arabic"
@@ -1140,7 +1141,7 @@ msgstr "Balinesisch"
 
 #: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L512
 msgid "Assyrian Neo-Aramaic"
-msgstr "Assyrisch-Neuaramäisch"
+msgstr "Aramäisch (Assyrisch-Neu-)"
 
 #: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L513
 msgid "Tuvaluan"
@@ -1195,7 +1196,7 @@ msgid "Temuan"
 msgstr "Temuanisch"
 
 #: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L526
-msgid "Chinese (Jin)"
+msgid "Jin Chinese"
 msgstr "Chinesisch (Jin)"
 
 #: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L527
@@ -1424,7 +1425,7 @@ msgstr "Altspanisch"
 
 #: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L583
 msgid "Jewish Babylonian Aramaic"
-msgstr "Jüdisch-babylonisches Aramäisch"
+msgstr "Aramäisch (jüdisch-babylonisch)"
 
 #: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L584
 msgid "Okinawan"
@@ -1468,4 +1469,60 @@ msgstr "ChiTonga (Sambesi)"
 
 #: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L594
 msgid "Newari"
+msgstr "Newari"
+
+#: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L595
+msgid "Jewish Palestinian Aramaic"
+msgstr "Aramäisch (jüdisch-palästinisch)"
+
+#: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L596
+msgid "Phoenician"
+msgstr "Phönizisch"
+
+#: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L597
+msgid "Rendille"
+msgstr "Rendille"
+
+#: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L598
+msgid "Nuosu"
+msgstr "Yi (Norddialekt)"
+
+#: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L599
+msgid "Drents"
+msgstr "Drents"
+
+#: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L600
+msgid "Southern Subanen"
+msgstr "Subanen (Süd)"
+
+#: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L601
+msgid "Chinook Jargon"
+msgstr "Chinook"
+
+#: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L602
+msgid "Baluchi"
+msgstr "Belutschi"
+
+#: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L603
+msgid "Pali"
+msgstr "Pali"
+
+#: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L604
+msgid "Ancient Hebrew"
+msgstr "Hebräisch (Alt-)"
+
+#: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L605
+msgid "South Levantine Arabic"
+msgstr "Arabisch (Südlevantinisch)"
+
+#: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L606
+msgid "Southern Haida"
+msgstr "Haida (Süd)"
+
+#: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L607
+msgid "Northern Haida"
+msgstr "Haida (Nord)"
+
+#: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L608
+msgid "Karakhanid"
 msgstr ""

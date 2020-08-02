@@ -159,7 +159,7 @@ $this->set('title_for_layout', $this->Pages->formatTitle(__('Settings')));
                     ng-init="showTranscriptions = <?= $showTranscriptions ?>"
                     class="md-primary">
                 </md-checkbox>
-                <p><?php echo __('Always show transcriptions and alternative scripts') ?> </p>
+                <p><?php echo __('Always show unreviewed transcriptions and alternative scripts') ?> </p>
                 <div ng-hide="true">
                 <?php
                     echo $this->Form->input(
@@ -235,6 +235,15 @@ $this->set('title_for_layout', $this->Pages->formatTitle(__('Settings')));
                     'label' => ''
                 )); ?>
             </md-list-item>
+            <?php if ($userSettings->settings['can_switch_license']) : ?>
+                <md-list-item>
+                    <p><?= __('Default license for original sentences'); ?></p>
+                    <?= $this->Form->input('settings.default_license', [
+                        'options' => $this->SentenceLicense->getLicenseOptions(),
+                        'label' => ''
+                    ]); ?>
+                </md-list-item>
+            <?php endif; ?>
         </md-list>
         <br>
 

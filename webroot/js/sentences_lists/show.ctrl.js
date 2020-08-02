@@ -53,7 +53,6 @@
                 vm.newSentence.lang = vm.showAutoDetect ? 'auto' : langCodes[0];
             }
             vm.licenses = licenses;
-            vm.newSentence.license = Object.keys(vm.licenses)[0];
         }
 
         function initList(list) {
@@ -106,7 +105,7 @@
         function editName() {
             vm.showEditNameForm =  true;
             setTimeout(function() {
-                var input = angular.element('#edit-name-input');
+                var input = angular.element(document.querySelector('#edit-name-input'));
                 input.focus();
             }, 100);
         }

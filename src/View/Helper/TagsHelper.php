@@ -81,7 +81,6 @@ class TagsHelper extends AppHelper
                     $this->displayTag(
                         $tagName, $tagId, $sentenceId, $userId, $username, $date, $sentenceLang
                     );
-
                 }
                 ?>
             </div>
@@ -206,6 +205,7 @@ class TagsHelper extends AppHelper
             'label' => '',
             'lang' => '',
             'dir' => 'auto',
+            'autocomplete' => 'off'
         ]);
         echo $this->Form->hidden('sentence_id', [
             'value' => $sentenceId

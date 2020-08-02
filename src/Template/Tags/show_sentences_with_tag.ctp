@@ -46,9 +46,11 @@ $tagsIndexUrl = $this->Url->build([
 </div>
 
 <div id="main_content">
-    <div class="section">
-        <h2>
-        <?php
+<section class="md-whiteframe-1dp">
+    <md-toolbar class="md-hue-2">
+        <div class="md-toolbar-tools">
+            <h2 flex>
+            <?php
             $n = $this->Paginator->param('count');
             echo format(
                 __n('{tagName} ({n} sentence)', '{tagName} ({n} sentences)', $n),
@@ -57,21 +59,29 @@ $tagsIndexUrl = $this->Url->build([
                     'n' => $this->Number->format($n)
                 )
             );
-        ?>
-        </h2>
+            ?>
+            </h2>
+            
+            <?= $this->element('sentences/expand_all_menus_button'); ?>
 
-        <div class="sortBy">
-            <strong><?php echo __("Sort by:") ?></strong>
-            <?php
-            /* @translators: sort option in the page that lists sentences having a certain tag */
-            echo $this->Paginator->sort('sentence_id', __('date created'));
+            <?php 
+                $options = array(
+                    /* @translators: sort option in a "Sentences with tag" page */
+                    array('param' => 'sentence_id', 'direction' => 'desc', 'label' => __('Newest sentences first')),
+                    /* @translators: sort option in a "Sentences with tag" page */
+                    array('param' => 'sentence_id', 'direction' => 'asc', 'label' => __('Oldest sentences first')),
+                    /* @translators: sort option in a "Sentences with tag" page */
+                    array('param' => 'added_time', 'direction' => 'desc', 'label' => __('Most recently tagged')),
+                    /* @translators: sort option in a "Sentences with tag" page */
+                    array('param' => 'added_time', 'direction' => 'asc', 'label' => __('Least recently tagged'))
+                );
+                echo $this->element('sort_menu', array('options' => $options));
             ?>
-            |
-            <?php
-            /* @translators: sort option in the page that lists sentences having a certain tag */
-            echo $this->Paginator->sort('added_time', __("date of tag"));
-            ?>
+
         </div>
+    </md-toolbar>
+
+    <md-content>
 
         <?php $this->Pagination->display(); ?>
 
@@ -110,5 +120,6 @@ $tagsIndexUrl = $this->Url->build([
 
         <?php $this->Pagination->display(); ?>
         
-    </div>
+    </md-content>
+</section>
 </div>

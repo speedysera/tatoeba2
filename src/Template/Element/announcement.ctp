@@ -57,44 +57,47 @@ if (!CurrentUser::hasAcceptedNewTermsOfUse()) {
     echo $this->Form->end();
 }
 
-
-if (Configure::read('Announcement.enabled')) {
-    $isDisplayingAnnouncement = true;
-    $announcementId = 'kodoeba';
-    $announcementText = $this->Html->tag('div', format(__(
-        'Would you like to help with the development of Tatoeba? Join our <a href="{}">coding event</a>!'
-    ), 'https://blog.tatoeba.org/2020/05/announcing-kodoeba-1.html'));
+if ($this->Announcement->isDisplayed()) {
+    if ($warning = $this->Announcement->shutdownWarning()) {
+        echo $this->Html->div('maintenance', $warning);
+    } 
     
-    $closeButton = $this->Html->div('close button', $this->Images->svgIcon('close'));
-    $content = $this->Html->div('content', $announcementText);
-
-    echo $this->Html->div(
-        'announcement',
-        $closeButton . $content,
-        array(
-            'data-announcement-id' => $announcementId
-        )
-    );
+    $isDisplayingAnnouncement = true;
+    ?>
+    <div class="announcement md-whiteframe-1dp" info-banner ng-init="vm.init('hide_announcement')" ng-cloak>
+        <p>
+        Announcement text here.
+        </p>
+        <div layout="row" layout-align="end center">
+            <?php /* @translators: button to close the blue announcement banner */ ?>
+            <md-button class="md-primary" ng-click="vm.hideAnnouncement()"><?= __('Close') ?></md-button>
+        </div>
+    </div>
+    <?php
 }
 
 if (Configure::read('Tatoeba.devStylesheet')) {
     $isDisplayingAnnouncement = true;
-    $content = __(
-        'Warning: this website is for testing purposes. '.
-        'Everything you submit will be definitely lost.', true
-    );
-    $closeButton = $this->Html->div('close button', $this->Images->svgIcon('close'));
-    echo $this->Html->div(
-        'announcement',
-        $closeButton . $content,
-        array(
-            'data-announcement-id' => 'dev-warning5'
-        )
-    );
+    ?>
+    <div class="announcement md-whiteframe-1dp" info-banner ng-init="vm.init('hide_dev_warning')" ng-cloak>
+        <div layout="row">
+            <md-icon>warning</md-icon>
+            <p>
+                <?= __(
+                'Warning: this website is for testing purposes. '.
+                'Everything you submit will be definitely lost.', true
+                ); ?>
+            </p>
+        </div>
+        <div layout="row" layout-align="end center">
+            <?php /* @translators: button to close the blue announcement banner */ ?>
+            <md-button class="md-primary" ng-click="vm.hideAnnouncement()"><?= __('Close') ?></md-button>
+        </div>
+    </div>
+    <?php
 }
 
 if ($isDisplayingAnnouncement) {
-    $this->Html->script(JS_PATH . 'jquery.cookie.js', ['block' => 'scriptBottom']);
-    $this->Html->script(JS_PATH . 'announcement.js',  ['block' => 'scriptBottom']);
+    $this->Html->script(JS_PATH . 'directives/info-banner.dir.js', ['block' => 'scriptBottom']);
 }
 ?>

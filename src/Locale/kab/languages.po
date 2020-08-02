@@ -3,8 +3,9 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# MozillaKab <belkacem77@gmail.com>, 2019
-# MozillaKab <belkacem77@gmail.com>, 2018-2019
+# marzuq UCCEN <merzouk.ouchene@laposte.net>, 2020
+# Muḥend Belqasem <belkacem77@gmail.com>, 2019
+# Muḥend Belqasem <belkacem77@gmail.com>, 2018-2019
 # Slimane Selyan AMIRI <selyan.kab@gmail.com>, 2020
 # Slimane Selyan AMIRI <selyan.kab@gmail.com>, 2018-2019
 # Slimane Selyan AMIRI <selyan.kab@gmail.com>, 2020
@@ -12,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Tatoeba Website\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-08 11:57+0800\n"
-"PO-Revision-Date: 2020-05-08 05:20+0000\n"
+"POT-Creation-Date: 2020-07-23 16:42+0200\n"
+"PO-Revision-Date: 2020-07-23 17:31+0000\n"
 "Last-Translator: Transifex Bot <>\n"
 "Language-Team: Kabyle (http://www.transifex.com/tatoeba/tatoeba_website/language/kab/)\n"
 "MIME-Version: 1.0\n"
@@ -244,7 +245,7 @@ msgstr "Taɛrabt n Ɛiraq"
 
 #: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L288
 msgid "Sanskrit"
-msgstr "m"
+msgstr "Tasanskrit"
 
 #: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L289
 msgid "Urdu"
@@ -1195,8 +1196,8 @@ msgid "Temuan"
 msgstr "Temuan"
 
 #: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L526
-msgid "Chinese (Jin)"
-msgstr "Tacinwat (Jin)"
+msgid "Jin Chinese"
+msgstr "Tacinwat Jin"
 
 #: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L527
 msgid "Maithili"
@@ -1456,16 +1457,72 @@ msgstr "Tafrisyant n ugafa"
 
 #: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L591
 msgid "Nyungar"
-msgstr ""
+msgstr "Tanyungart"
 
 #: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L592
 msgid "Isan"
-msgstr ""
+msgstr "Tisant"
 
 #: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L593
 msgid "Tonga (Zambezi)"
-msgstr ""
+msgstr "Tatongat (Zambezi)"
 
 #: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L594
 msgid "Newari"
+msgstr "Tanwarit"
+
+#: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L595
+msgid "Jewish Palestinian Aramaic"
+msgstr "Taramit n udayen n falastin"
+
+#: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L596
+msgid "Phoenician"
+msgstr "Tafiniqt"
+
+#: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L597
+msgid "Rendille"
+msgstr "Tarendillit"
+
+#: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L598
+msgid "Nuosu"
+msgstr "Tanuosut"
+
+#: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L599
+msgid "Drents"
+msgstr "Tadrentsit"
+
+#: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L600
+msgid "Southern Subanen"
+msgstr "Tasubanent n unẓul"
+
+#: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L601
+msgid "Chinook Jargon"
+msgstr "Tantala n Jargun"
+
+#: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L602
+msgid "Baluchi"
+msgstr "tabaluččit"
+
+#: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L603
+msgid "Pali"
+msgstr "Tapalit"
+
+#: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L604
+msgid "Ancient Hebrew"
+msgstr "Teεebrit taqburt"
+
+#: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L605
+msgid "South Levantine Arabic"
+msgstr ""
+
+#: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L606
+msgid "Southern Haida"
+msgstr ""
+
+#: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L607
+msgid "Northern Haida"
+msgstr ""
+
+#: github.com/Tatoeba/tatoeba2/tree/dev/src/Lib/LanguagesLib.php#L608
+msgid "Karakhanid"
 msgstr ""

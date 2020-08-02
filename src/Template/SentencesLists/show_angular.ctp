@@ -13,7 +13,7 @@ $listData = [
     'id' => $list['id'],
     'name' => $list['name']
 ];
-$listJSON = htmlspecialchars(json_encode($listData), ENT_QUOTES, 'UTF-8');
+$listJSON = h(json_encode($listData));
 $listJSON = str_replace('{{', '\{\{', $listJSON); // avoid interpolation by AngularJS
 $this->set('title_for_layout', $this->Pages->formatTitle($listName));
 ?>
@@ -57,7 +57,7 @@ $this->set('title_for_layout', $this->Pages->formatTitle($listName));
     <?php
     if ($permissions['canEdit']) {
         ?>
-        <div class="section md-whiteframe-1dp">
+        <div class="section md-whiteframe-1dp" ng-controller="optionsCtrl">
             <?php /* @translators: header text in the side bar of a list page (noun) */ ?>
             <h2><?php echo __('Options'); ?></h2>
             <ul class="sentencesListActions">
@@ -86,7 +86,7 @@ $this->set('title_for_layout', $this->Pages->formatTitle($listName));
 
 <div id="main_content">
 
-<section class="md-whiteframe-1dp" ng-controller="SentencesListsShowController as vm" ng-init="vm.initList(<?= $listJSON ?>, sentenceForm)">
+<section class="md-whiteframe-1dp" ng-controller="SentencesListsShowController as vm" ng-init="vm.initList(<?= $listJSON ?>)">
     <md-toolbar class="md-hue-2">
         <div class="md-toolbar-tools">
             <h2 ng-cloak flex>{{vm.list.currentName}}</h2>
@@ -137,6 +137,21 @@ $this->set('title_for_layout', $this->Pages->formatTitle($listName));
                 </md-icon>
             </md-button>
             <?php } ?>
+
+            <?php 
+                $options = array(
+                    /* @translators: sort option in a list page */
+                    array('param' => 'created', 'direction' => 'desc', 'label' => __('Most recently added')),
+                    /* @translators: sort option in a list page */
+                    array('param' => 'created', 'direction' => 'asc', 'label' => __('Least recently added')),
+                    /* @translators: sort option in a list page */
+                    array('param' => 'sentence_id', 'direction' => 'desc', 'label' => __('Newest sentences')),
+                    /* @translators: sort option in a list page */
+                    array('param' => 'sentence_id', 'direction' => 'asc', 'label' => __('Oldest sentences'))
+                );
+                echo $this->element('sort_menu', array('options' => $options));
+            ?>
+
         </div>
     </md-toolbar>
 
@@ -206,16 +221,6 @@ $this->set('title_for_layout', $this->Pages->formatTitle($listName));
         <?php
     } else {
         ?>
-        <div class="sortBy" id="sortBy">
-        <strong><?php echo __("Sort by:") ?> </strong>
-        <?php
-        /* @translators: sort option in a list page */
-        echo $this->Paginator->sort('created', __('date added to list'));
-        echo ' | ';
-        /* @translators: sort option in a list page */
-        echo $this->Paginator->sort('sentence_id', __('date created'));
-        ?>
-        </div>
         <?php
     }
     ?>

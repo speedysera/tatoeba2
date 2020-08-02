@@ -102,7 +102,7 @@ class SentencesListsTable extends Table
             ->where([
                 'OR' => [
                     'user_id' => CurrentUser::get('id'),
-                    'visibility' => 'public',
+                    'visibility IN' => ['public', 'listed']
                 ]
             ])
             ->select(['id', 'name', 'user_id'])
@@ -116,13 +116,13 @@ class SentencesListsTable extends Table
      *
      * @return bool False if the list cannot be searched, the list otherwise.
      */
-    public function isSearchableList($listId)
+    public function isSearchableList($listId, $byUserId)
     {
         return $this->find()
             ->where([
                 'id' => $listId,
                 'OR' => [
-                    'user_id' => CurrentUser::get('id'),
+                    'user_id' => $byUserId,
                     'NOT' => ['visibility' => 'private']
                 ]
             ])
@@ -214,7 +214,7 @@ class SentencesListsTable extends Table
             $conditions['SentencesLists.user_id'] = $userId;
         }
         if (!empty($visibility)) {
-            $conditions['SentencesLists.visibility'] = $visibility;
+            $conditions['SentencesLists.visibility IN'] = $visibility;
         }
         if (!empty($editableBy)) {
             $conditions['SentencesLists.editable_by'] = $editableBy;

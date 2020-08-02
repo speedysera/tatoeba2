@@ -6,7 +6,6 @@ $config = [
     'public_actions' => [
         'activities' => [ 'improve_sentences', 'translate_sentences_of' ],
         'audio' => [ 'of', 'index' ],
-        'autocompletions' => '*',
         'reviews' => [ 'of' ],
         'contributions' => '*',
         'pages' => '*',
@@ -39,7 +38,8 @@ $config = [
         'tags' => [
             'show_sentences_with_tag',
             'view_all',
-            'search'
+            'search',
+            'autocomplete'
         ],
         'tools' => '*',
         'transcriptions' => [ 'view', 'of' ],
@@ -59,6 +59,7 @@ $config = [
             'check_username',
             'check_email',
             'for_language',
+            'login_dialog_template',
         ],
         'vocabulary' => [ 'of' ],
         'wall' => [
@@ -66,6 +67,7 @@ $config = [
             'show_message',
             'messages_of_user',
         ],
+        'angular_templates' => '*',
     ],
 
     // actions not available for guests or some users

@@ -32,6 +32,7 @@ use App\Model\CurrentUser;
 use App\Model\Entity\User;
 use App\Event\ContributionListener;
 use App\Event\UsersLanguagesListener;
+use App\Event\LinksListener;
 use Cake\Utility\Hash;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Cache\Cache;
@@ -93,6 +94,7 @@ class SentencesTable extends Table
 
         $this->getEventManager()->on(new ContributionListener());
         $this->getEventManager()->on(new UsersLanguagesListener());
+        $this->getEventManager()->on(new LinksListener());
     }
 
     public function validationDefault(Validator $validator)
@@ -156,7 +158,19 @@ class SentencesTable extends Table
                     return true;
                 }
             },
-            'licenseCheck'
+            'isTranslatable'
+        );
+
+        $rules->addCreate(
+            function ($entity, $options) {
+                if (!empty($entity->license)) {
+                    return CurrentUser::getSetting('can_switch_license') ||
+                           $entity->license == CurrentUser::getSetting('default_license');
+                } else {
+                    return true;
+                }
+            },
+            'hasCorrectLicense'
         );
 
         return $rules;
@@ -240,7 +254,27 @@ class SentencesTable extends Table
         ));
         $this->getEventManager()->dispatch($event);
 
+        if (!$created && $entity->isDirty('lang')) {
+            $oldLang = $entity->getOriginal('lang');
+            $this->Contributions->updateLanguage($entity->id, $entity->lang);
+            $this->Languages->incrementCountForLanguage($entity->lang);
+            $this->Languages->decrementCountForLanguage($oldLang);
+
+            // In the old language, add the sentence to the kill-list
+            // so that it doesn't appear in results any more.
+            // In addition an unknown language shouldn't be added.
+            if ($oldLang) {
+                $reindexFlag = $this->ReindexFlags->newEntity([
+                    'sentence_id' => $entity->id,
+                    'lang' => $oldLang,
+                    'type' => 'removal',
+                ]);
+                $this->ReindexFlags->save($reindexFlag);
+            }
+        }
+
         $this->updateTags($entity);
+
         if ($entity->isDirty('modified')) {
             $this->needsReindex($entity->id);
         }
@@ -274,17 +308,17 @@ class SentencesTable extends Table
         if (empty($ids)) {
             return;
         }
-        $result = $this->find('all')
-            ->where(['id' => $ids], ['id' => 'integer[]'])
-            ->select(['id', 'lang'])
+        $sentences = $this->find('all')
+            ->where(['id' => $ids, 'lang IS NOT' => null], ['id' => 'integer[]'])
+            ->select(['sentence_id' => 'id', 'lang'])
+            ->formatResults(function ($results) {
+                return $results->map(function ($row) {
+                    $row['type'] = 'change';
+                    return $row;
+                });
+            })
+            ->disableHydration()
             ->toList();
-        $sentences = [];
-        foreach ($result as $sentence) {
-            $sentences[] = [
-                'sentence_id' => $sentence->id,
-                'lang' => $sentence->lang
-            ];
-        }
         $data = $this->ReindexFlags->newEntities($sentences);
         $this->ReindexFlags->saveMany($data);
     }
@@ -321,13 +355,15 @@ class SentencesTable extends Table
         $translationsIds = $this->Links->findDirectAndIndirectTranslationsIds($entity->id);
         $this->needsReindex($translationsIds);
 
-        // Add the sentence to the kill-list
-        // so that it won't appear in search results anymore
-        $reindexFlag = $this->ReindexFlags->newEntity([
-            'sentence_id' => $sentenceId,
-            'lang' => $sentenceLang
-        ]);
-        $this->ReindexFlags->save($reindexFlag);
+        // Add the sentence to the kill-list so that it won't appear in search results anymore
+        if ($sentenceLang) {
+            $reindexFlag = $this->ReindexFlags->newEntity([
+                'sentence_id' => $sentenceId,
+                'lang' => $sentenceLang,
+                'type' => 'removal',
+            ]);
+            $this->ReindexFlags->save($reindexFlag);
+        }
 
         // Remove links
         $conditions = ['OR' => [
@@ -677,10 +713,14 @@ class SentencesTable extends Table
                 'SentencesLists' => [
                     'fields' => ['id', 'SentencesSentencesLists.sentence_id']
                 ],
+                'UsersSentences' => function (Query $q) {
+                    return $q->select(['sentence_id', 'correctness'])
+                             ->where(['user_id' => CurrentUser::get('id')]);
+                },
             ];
         }
 
-        if (isset($what['translations'])) {
+        if (isset($what['translations']) && $what['translations']) {
             $translationFields = [
                 'id', 'text', 'lang', 'correctness', 'script',
                 'SentencesTranslations.sentence_id'
@@ -1087,20 +1127,6 @@ class SentencesTable extends Table
         if (($ownerId == $currentUserId || CurrentUser::isModerator()) && !$this->hasAudio($sentence->id)) {
             $sentence->lang = $newLang;
             $result = $this->save($sentence);
-
-            $this->Links->updateLanguage($sentenceId, $newLang);
-            $this->Contributions->updateLanguage($sentenceId, $newLang);
-            $this->Languages->incrementCountForLanguage($newLang);
-            $this->Languages->decrementCountForLanguage($prevLang);
-
-            // In the previous language, add the sentence to the kill-list
-            // so that it doesn't appear in results any more.
-            $reindexFlag = $this->ReindexFlags->newEntity([
-                'sentence_id' => $sentenceId,
-                'lang' => $prevLang,
-            ]);
-            $this->ReindexFlags->save($reindexFlag);
-
             return $result->lang;
         }
 
@@ -1316,48 +1342,5 @@ class SentencesTable extends Table
         }
 
         return $this->delete($sentence);
-    }
-
-    private function orderby($expr, $order)
-    {
-        return $expr . ($order ? ' ASC' : ' DESC');
-    }
-
-    public function sphinxOptions($query, $from, $sort, $sort_reverse)
-    {
-        if ($sort == 'random') {
-            $sortOrder = '@random';
-        } elseif (empty($query)) {
-            // When the query is empty, Sphinx does not perform any
-            // ranking, so we need to rely on ordering instead
-            if ($sort == 'created' || $sort == 'modified') {
-                $sortOrder = $this->orderby($sort, $sort_reverse);
-            } else {
-                $sortOrder = $this->orderby('text_len', !$sort_reverse);
-            }
-        } else {
-            // When there are keywords, Sphinx will perform ranking
-            $sortOrder = $this->orderby('@rank', $sort_reverse);
-            if ($sort == 'words') {
-                $rankingExpr = '-text_len';
-            } elseif ($sort == 'relevance') {
-                $rankingExpr = '-text_len+top(lcs+exact_order*100)*100';
-            } elseif ($sort == 'created' || $sort == 'modified') {
-                $rankingExpr = $sort;
-            }
-        }
-        $index = $from == 'und' ?
-                 array('und_index') :
-                 array($from . '_main_index', $from . '_delta_index');
-        $sphinx = array(
-            'index' => $index,
-            'matchMode' => SPH_MATCH_EXTENDED2,
-            'sortMode' => array(SPH_SORT_EXTENDED => $sortOrder),
-        );
-        if (isset($rankingExpr)) {
-            $sphinx['rankingMode'] = array(SPH_RANK_EXPR => $rankingExpr);
-        };
-
-        return $sphinx;
     }
 }
