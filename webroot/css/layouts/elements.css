@@ -1208,7 +1208,16 @@ input.sentenceId {
     height: 20px;
 }
 
+.audioButton:focus {
+    outline: none;
+}
+
+.audioButton::-moz-focus-inner {
+    border: none;
+}
+
 .audioButton.audioAvailable {
+    border: none;
     background: url(../../img/audio.svg);
 }
 
@@ -1469,6 +1478,13 @@ html[dir="rtl"] .sentence-and-translations .translation.trusted-user.expanded .t
     }
     .sentence-and-translations .translation .transcription .icon {
         margin: 0 10px 0 12px;
+    }
+
+    .sentence-and-translations .md-icon-button.activated {
+        display: inherit;
+    }
+    .sentence-and-translations .md-icon-button.deactivated {
+        display: none;
     }
 }
 
